@@ -53,11 +53,7 @@
                     <input type="password" id="login-password" class="input-field" placeholder="Masukkan password...">
                 </div>
                 
-                <button type="button" class="btn-primary" id="tombol-masuk-sias" style="margin-bottom: 12px;">MASUK</button>
-                
-                <button type="button" class="btn-biometric" id="btn-login-fingerprint">
-                    🔒 MASUK DENGAN SIDIK JARI
-                </button>
+                <button type="button" class="btn-primary" id="tombol-masuk-sias">MASUK</button>
             </div>
         </div>
 
@@ -73,7 +69,7 @@
                 <button class="tab-link" id="btn-tab-semua">Semua</button>
                 <button class="tab-link" id="btn-tab-kelas">Kelas</button>
                 <button class="tab-link" id="btn-tab-mapel">Mapel</button>
-                <button class="tab-link" id="btn-tab-biometric">Biometrik</button>
+                <button class="tab-link" id="btn-tab-akses">Kendali Akses</button>
                 <button class="tab-link" id="btn-tab-stats">Nilai</button>
                 <button class="tab-link" id="btn-tab-settings">Settings</button>
                 <button class="tab-link btn-logout-top" id="btn-tab-logout">Keluar</button>
@@ -83,33 +79,40 @@
                 
                 <div id="sub-input" class="tab-content active">
                     <h3 class="section-title">Formulir Input Data</h3>
-                    <div class="form-group">
-                        <label for="menu-kelas">Menu Kelas</label>
-                        <select id="menu-kelas" class="input-field">
-                            <option value="">-- Pilih Kelas --</option>
-                            <optgroup label="Kelas X">
-                                <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
-                                <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
-                            </optgroup>
-                            <optgroup label="Kelas XI">
-                                <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
-                                <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
-                            </optgroup>
-                        </select>
+                    
+                    <div id="alert-akses-tertutup" class="status-hardware-badge no-support" style="display: none; margin-bottom: 15px;">
+                        🔒 MAAF, AKSES PENGISIAN DATA SEDANG DIKUNCI OLEH PUSAT
                     </div>
-                    <div class="form-group">
-                        <label for="menu-nama">Menu Nama Siswa</label>
-                        <input type="text" id="menu-nama" class="input-field" placeholder="Nama lengkap...">
+
+                    <div id="wrapper-form-input">
+                        <div class="form-group">
+                            <label for="menu-kelas">Menu Kelas</label>
+                            <select id="menu-kelas" class="input-field">
+                                <option value="">-- Pilih Kelas --</option>
+                                <optgroup label="Kelas X">
+                                    <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
+                                    <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
+                                </optgroup>
+                                <optgroup label="Kelas XI">
+                                    <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
+                                    <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-nama">Menu Nama Siswa</label>
+                            <input type="text" id="menu-nama" class="input-field" placeholder="Nama lengkap...">
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-mapel">Menu Mata Pelajaran</label>
+                            <select id="menu-mapel" class="input-field"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-nilai">Menu Nilai</label>
+                            <input type="number" id="menu-nilai" class="input-field" placeholder="0-100" min="0" max="100">
+                        </div>
+                        <button type="button" class="btn-primary" id="btn-simpan-cloud">SIMPAN DATA</button>
                     </div>
-                    <div class="form-group">
-                        <label for="menu-mapel">Menu Mata Pelajaran</label>
-                        <select id="menu-mapel" class="input-field"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="menu-nilai">Menu Nilai</label>
-                        <input type="number" id="menu-nilai" class="input-field" placeholder="0-100" min="0" max="100">
-                    </div>
-                    <button type="button" class="btn-primary" id="btn-simpan-cloud">SIMPAN DATA</button>
                 </div>
 
                 <div id="sub-seluruh-siswa" class="tab-content">
@@ -151,38 +154,28 @@
                     <ul class="list-mapel-wrapper" id="daftar-mapel-list"></ul>
                 </div>
 
-                <div id="sub-biometric" class="tab-content">
-                    <h3 class="section-title">Pengaturan Biometrik</h3>
+                <div id="sub-akses-portal" class="tab-content">
+                    <h3 class="section-title">Manajemen Kendali Akses</h3>
                     
-                    <div id="hardware-status-box" class="status-hardware-badge" style="margin-bottom: 15px;">
-                        Mendeteksi hardware sensor...
-                    </div>
-
-                    <div id="biometric-admin-controls">
-                        <div class="form-group">
-                            <label for="bio-nama-label">Nama Pemilik Sidik Jari</label>
-                            <input type="text" id="bio-nama-label" class="input-field" placeholder="Contoh: Jempol Kanan Aa / HP Ibu...">
-                        </div>
-
-                        <div style="text-align: center; margin-top: 20px; margin-bottom: 25px;">
-                            <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">Sentuh tombol di bawah ini untuk memindai sidik jari device:</p>
-                            <button type="button" class="btn-primary" id="btn-registrasi-sidikjari" style="background: #16a34a; width: auto; padding: 12px 25px;">
-                                👆 TEMPELKAN SIDIK JARI DEVICE
-                            </button>
-                        </div>
-                        
-                        <h4 style="font-size: 13px; color:#475569; margin-bottom:8px; border-top: 1px solid #e2e8f0; padding-top: 15px;">📜 Riwayat Aktivitas Biometrik</h4>
-                        <div class="table-responsive">
-                            <table class="data-table" style="font-size: 11px;">
-                                <thead>
-                                    <tr><th>Waktu</th><th>Aktivitas</th><th>Status</th></tr>
-                                </thead>
-                                <tbody id="tabel-log-biometrik">
-                                    <tr><td colspan="3" style="text-align:center; color:#94a3b8;">Tidak ada riwayat.</td></tr>
-                                </tbody>
-                            </table>
+                    <div style="margin-bottom: 20px; text-align: center;">
+                        <span style="font-size: 12px; font-weight: bold; color: #475569;">STATUS AKSES SAAT INI:</span>
+                        <div id="badge-status-akses" class="status-hardware-badge support" style="margin-top: 5px; font-size: 14px;">
+                            OPEN AKSES (TERBUKA)
                         </div>
                     </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <button type="button" class="btn-primary" id="btn-open-akses" style="background: #16a34a; padding: 14px;">
+                            🔓 OPEN AKSES (Buka Pengisian Data)
+                        </button>
+                        <button type="button" class="btn-primary" id="btn-close-akses" style="background: #ef4444; padding: 14px;">
+                            🔒 CLOSE AKSES (Kunci Pengisian Data)
+                        </button>
+                    </div>
+
+                    <p style="font-size: 11px; color: #64748b; margin-top: 15px; text-align: center; line-height: 1.4;">
+                        *Mengubah status di atas akan langsung mengunci atau membuka form input data siswa di halaman depan secara real-time.
+                    </p>
                 </div>
 
                 <div id="sub-nilai-stats" class="tab-content">
@@ -217,6 +210,7 @@
         </div>
     </div>
 
-    <script src="script.js?v=2.2"></script>
+    <script src="script.js?v=3.0"></script>
 </body>
 </html>
+                        
