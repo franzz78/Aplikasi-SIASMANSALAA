@@ -11,8 +11,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; height: 100vh; background: 
 
 .panel { display: none; width: 100%; height: 100%; }
 .panel.active { display: flex !important; flex-direction: column; animation: fadeIn 0.3s ease-in-out forwards; }
-
-#panel-awal.active { display: block !important; justify-content: initial; }
+#panel-awal.active { display: block !important; }
 
 .portal-title { font-family: 'Outfit', sans-serif; font-size: 26px; color: var(--primary); font-weight: 800; }
 .instansi-box { text-align: center; margin-top: 5px; }
@@ -26,11 +25,16 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; height: 100vh; background: 
 .input-field:focus { border-color: var(--primary); background: #fff; }
 .input-field:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
 
-button { cursor: pointer; font-family: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; }
 button:disabled { cursor: not-allowed !important; }
-.btn-primary { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 13px; transition: 0.2s; }
+.btn-primary { width: 100%; padding: 12px; border-radius: 10px; background: var(--primary); color: white; font-weight: 700; font-size: 13px; transition: 0.2s; }
 .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
-.btn-text { background: transparent; border: none; width: 100%; padding: 10px; font-size: 12px; }
+
+/* 🔴 CSS DESAIN TOMBOL HAPUS RINGKAS DALAM TABEL */
+.btn-hapus-tabel {
+    background: #ef4444; color: white; font-size: 10px; font-weight: bold; padding: 5px 10px; border-radius: 6px; transition: 0.2s;
+}
+.btn-hapus-tabel:hover { background: #dc2626; }
 
 .header-navbar { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; margin-bottom: 8px; min-height: 40px; }
 .btn-back-nav { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; color: #475569; }
@@ -38,7 +42,7 @@ button:disabled { cursor: not-allowed !important; }
 
 .top-tab-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; scrollbar-width: none; }
 .top-tab-bar::-webkit-scrollbar { display: none; }
-.top-tab-bar .tab-link { padding: 6px 14px; background: #f1f5f9; border: none; border-radius: 20px; white-space: nowrap; font-size: 12px; font-weight: bold; color: #475569; }
+.top-tab-bar .tab-link { padding: 6px 14px; background: #f1f5f9; border-radius: 20px; white-space: nowrap; font-size: 12px; font-weight: bold; color: #475569; }
 .top-tab-bar .tab-link.active { background: #2563eb; color: #ffffff; }
 
 .content-tabs-portrait { flex: 1; overflow-y: auto; padding-right: 2px; }
@@ -49,7 +53,7 @@ button:disabled { cursor: not-allowed !important; }
 .table-responsive { width: 100%; max-height: 320px; overflow-y: auto; border-radius: 10px; border: 1px solid #e2e8f0; }
 .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
 .data-table th { background: #f1f5f9; padding: 10px; font-weight: 700; color: #475569; position: sticky; top: 0; }
-.data-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+.data-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
 .badge-kelas { background: rgba(37,99,235,0.1); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
 .nilai-text { font-weight: bold; color: #16a34a; }
 
@@ -63,5 +67,6 @@ button:disabled { cursor: not-allowed !important; }
 .stat-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: center; }
 .stat-title { font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; }
 .stat-value { font-size: 24px; font-weight: 800; color: #1e293b; margin-top: 4px; }
+.btn-text { background: transparent; width: 100%; padding: 10px; font-size: 12px; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
