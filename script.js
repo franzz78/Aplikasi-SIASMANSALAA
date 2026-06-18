@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
     muatDaftarMapelTab();
     periksaDukunganBiometrik();
 
-    // Event Login & Navigasi Utama
+    // Kontrol Event Alur Login & Kembali
     document.getElementById('tombol-masuk-sias').addEventListener('click', loginSistem);
     document.getElementById('btn-login-fingerprint').addEventListener('click', loginDenganSidikJari);
     document.getElementById('btn-kembali-menu').addEventListener('click', kembaliKeMenuInput);
     
-    // Manajemen Perpindahan Tab Atas
+    // Manajemen Tab Dinamis Atas
     document.getElementById('btn-tab-input').addEventListener('click', (e) => bukaTab(e, 'sub-input', 'Dashboard Utama', false));
     document.getElementById('btn-tab-semua').addEventListener('click', (e) => { bukaTab(e, 'sub-seluruh-siswa', 'Seluruh Siswa', true); muatSeluruhSiswa(); });
     document.getElementById('btn-tab-kelas').addEventListener('click', (e) => bukaTab(e, 'sub-setiap-kelas', 'Filter Kelas', true));
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('btn-tab-settings').addEventListener('click', (e) => bukaTab(e, 'sub-settings', 'Pengaturan', true));
     document.getElementById('btn-tab-logout').addEventListener('click', logoutSistem);
 
-    // Event Aksi Form Kerja
+    // Event Modul Input Formulir
     document.getElementById('btn-simpan-cloud').addEventListener('click', simpanDataSistem);
     document.getElementById('btn-tambah-mapel').addEventListener('click', tambahMapelKustom);
     document.getElementById('btn-registrasi-sidikjari').addEventListener('click', daftarkanKredensialSidikJari);
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('filter-kelas-dropdown').addEventListener('change', (e) => muatDataPerKelas(e.target.value));
 });
 
-// MEMERIKSA APAKAH SENSOR PERANGKAT AKTIF & COCOK
+// MEMERIKSA INSTALASI HARDWARE SENSOR PADA DEVICE
 async function periksaDukunganBiometrik() {
     const statusBox = document.getElementById('hardware-status-box');
     const btnLoginFinger = document.getElementById('btn-login-fingerprint');
@@ -73,12 +73,21 @@ async function periksaDukunganBiometrik() {
     }
 }
 
-// DAFTARKAN SIDIK JARI NYATA PERANGKAT & WAJIB INPUT NAMA KREDENSIAL
+// PENDAFTARAN MINIMALIS SIDIK JARI BAWAAN DEVICE
 async function daftarkanKredensialSidikJari() {
     if (!hardwareBiometricSupport) return;
 
+    const inputNama = document.getElementById('bio-nama-label');
+    const namaSidikJari = inputNama.value.trim();
+
+    // 1. Validasi Input Nama Harus Diisi Terlebih Dahulu
+    if (!namaSidikJari) {
+        Swal.fire('Nama Wajib Diisi', 'Silakan masukkan nama pemilik sidik jari terlebih dahulu sebelum menempelkan jari!', 'warning');
+        return;
+    }
+
     try {
-        // 1. Trigger Pemicu Sensor Sidik Jari Bawaan Device Secara Nyata (WebAuthn API Standard)
+        // Konfigurasi Mekanis Pengenal WebAuthn Standard
         const opsiTantanganMekanik = {
             publicKey: {
                 challenge: crypto.getRandomValues(new Uint8Array(32)),
@@ -90,53 +99,27 @@ async function daftarkanKredensialSidikJari() {
             }
         };
 
-        Swal.fire({
-            title: 'Pindai Sidik Jari',
-            text: 'Silakan sentuh atau tempel jari Anda pada area sensor perangkat untuk memindai...',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/2610/2610419.png',
-            imageWidth: 60, imageHeight: 60,
-            allowOutsideClick: false,
-            showCancelButton: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // Panggil sensor enkripsi lokal device
-                const kredensialNyata = await navigator.credentials.create(opsiTantanganMekanik);
-                
-                if (kredensialNyata) {
-                    // 2. Tampilkan Input Pesan Penamaan Setelah Sukses Memindai
-                    Swal.fire({
-                        title: 'Beri Nama Sidik Jari',
-                        text: 'Pemberian label identitas sidik jari wajib diisi agar tersimpan di database!',
-                        input: 'text',
-                        inputPlaceholder: 'Contoh: Jari Telunjuk Kanan Aa / HP Ibu...',
-                        allowOutsideClick: false,
-                        inputValidator: (value) => {
-                            if (!value || !value.trim()) {
-                                return 'Nama tidak boleh kosong! Harus diberi nama.';
-                            }
-                        }
-                    }).then((inputRes) => {
-                        const namaSidikJari = inputRes.value.trim();
-                        localStorage.setItem('siassmansala_fingerprint_registered', 'true');
-                        localStorage.setItem('siassmansala_fingerprint_label', namaSidikJari);
-                        
-                        // Kirim Log Ke Firebase
-                        catatLogBiometrik(`Registrasi Sidik Jari: "${namaSidikJari}"`, "BERHASIL");
-                        Swal.fire('Tersimpan', `Sidik jari "${namaSidikJari}" aktif mengikat sistem lokal.`, 'success');
-                    });
-                }
-            } else {
-                catatLogBiometrik("Registrasi Kredensial Baru", "DIBATALKAN");
-            }
-        });
+        // 2. Langsung Pemicu Papan Sensor Sidik Jari Bawaan HP/Device Secara Riil
+        const kredensialNyata = await navigator.credentials.create(opsiTantanganMekanik);
+        
+        if (kredensialNyata) {
+            localStorage.setItem('siassmansala_fingerprint_registered', 'true');
+            localStorage.setItem('siassmansala_fingerprint_label', namaSidikJari);
+            
+            // Mengirim Data Log Ke Jalur Node Firebase
+            catatLogBiometrik(`Registrasi Sidik Jari: "${namaSidikJari}"`, "BERHASIL");
+            
+            Swal.fire('Sukses Terdaftar', `Sidik jari "${namaSidikJari}" berhasil diverifikasi oleh perangkat dan disimpan ke sistem database!`, 'success');
+            inputNama.value = ""; // Kosongkan baris setelah sukses
+        }
 
     } catch (err) {
-        catatLogBiometrik("Registrasi Kredensial Baru", "GAGAL / DEVICE REJECTED");
-        Swal.fire('Gagal Scan', 'Sensor dibatalkan atau tidak mendeteksi sidik jari terdaftar di device Anda.', 'error');
+        catatLogBiometrik(`Registrasi: "${namaSidikJari}"`, "GAGAL / DIBATALKAN");
+        Swal.fire('Gagal Scan', 'Gagal memverifikasi sidik jari perangkat atau proses dibatalkan.', 'error');
     }
 }
 
-// LOG IN MENGGUNAKAN VERIFIKASI BIOMETRIK SIDIK JARI
+// OTENTIKASI PINDAI LOG IN MASUK SISTEM
 function loginDenganSidikJari() {
     const isRegistered = localStorage.getItem('siassmansala_fingerprint_registered');
     const labelSidikJari = localStorage.getItem('siassmansala_fingerprint_label') || "Sidik Jari Lokal";
@@ -156,7 +139,6 @@ function loginDenganSidikJari() {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                // Panggil modul otentikasi biometrik bawaan OS
                 const opsiVerifikasi = { publicKey: { challenge: crypto.getRandomValues(new Uint8Array(32)), timeout: 60000, userVerification: "required" } };
                 await navigator.credentials.get(opsiVerifikasi);
                 
@@ -167,17 +149,17 @@ function loginDenganSidikJari() {
                 .then(() => {
                     switchPanel('panel-menu');
                     document.getElementById('menu-pengguna').value = loggedInUser;
-                    kembaliKeMenuInput(); // Atur agar awal masuk membuka tab input data utama
+                    kembaliKeMenuInput();
                 });
             } catch(e) {
                 catatLogBiometrik(`Login via Sidik Jari ("${labelSidikJari}")`, "GAGAL VERIFIKASI");
-                Swal.fire('Gagal Otentikasi', 'Sidik jari tidak cocok dengan database perangkat ini!', 'error');
+                Swal.fire('Gagal Otentikasi', 'Sidik jari tidak cocok dengan sistem pengaman internal perangkat!', 'error');
             }
         }
     });
 }
 
-// PENGATURAN KENDALI INTERAKSI NAVIGASI TAB DAN TOMBOL KEMBALI
+// LOGIKA PERPINDAHAN TAB & TOMBOL KEMBALI
 function bukaTab(evt, tabId, judulHalaman, tampilkanTombolKembali) {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
@@ -185,7 +167,6 @@ function bukaTab(evt, tabId, judulHalaman, tampilkanTombolKembali) {
     document.getElementById(tabId).classList.add('active');
     if (evt) evt.currentTarget.classList.add('active');
 
-    // Update Bar Navigasi Atas Dinamis
     document.getElementById('judul-halaman-aktif').innerText = judulHalaman;
     const btnKembali = document.getElementById('btn-kembali-menu');
     
@@ -198,11 +179,10 @@ function bukaTab(evt, tabId, judulHalaman, tampilkanTombolKembali) {
 
 function kembaliKeMenuInput() {
     const tombolTabInput = document.getElementById('btn-tab-input');
-    // Paksa aktifkan kembali tab input utama secara otomatis
     bukaTab({ currentTarget: tombolTabInput }, 'sub-input', 'Dashboard Utama', false);
 }
 
-// LOGIKA SINKRONISASI DASAR KREATIF FIREBASE
+// MANAJEMEN PENYIMPANAN LOG BIOMETRIK FIREBASE
 function catatLogBiometrik(aktivitas, status) {
     const waktuWIB = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
     database.ref('riwayat_biometrik').push({ waktu: waktuWIB, aktivitas: aktivitas, status: status });
@@ -322,4 +302,4 @@ function simpanDataSistem() {
 
 function clearMapelCache() { localStorage.removeItem('siassmansala_mapel'); listMapelSistem = mapelWajibDefault; muatPilihanMapel(); muatDaftarMapelTab(); }
 function logoutSistem() { switchPanel('panel-awal'); }
-                        
+                                         
