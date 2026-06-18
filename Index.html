@@ -2,822 +2,201 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIASMANSALAA - Aplikasi Akademik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SIASSMANSALA | SMAN 1 Lemahabang</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="glow-bg"></div>
 
-    <div class="app-window">
-
-        <div class="sidebar-overlay" id="sidebar-menu">
-            <div class="sidebar-box">
-                <div class="sidebar-header">
-                    <div class="sidebar-profile">
-                        <div class="sidebar-avatar"><i class="fa-solid fa-user-shield"></i></div>
-                        <div class="sidebar-profile-text">
-                            <h4>Admin Guru</h4>
-                            <p>NIP. 19870112 201503 1 002</p>
-                        </div>
-                    </div>
-                    <button class="btn-close-sidebar" id="btn-close-sidebar"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                
-                <div class="sidebar-content">
-                    <span class="sidebar-label">NAVIGASI UTAMA</span>
-                    <div class="sidebar-item" data-target="dashboard"><i class="fa-solid fa-house"></i> Dashboard Beranda</div>
-                    <div class="sidebar-item" data-target="kelas"><i class="fa-solid fa-school"></i> Data Kelas</div>
-                    <div class="sidebar-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i> Data Semua Siswa</div>
-                    <div class="sidebar-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i> Rekap Semua Nilai</div>
-                    <div class="sidebar-item" data-target="mapel"><i class="fa-solid fa-book"></i> Mata Pelajaran</div>
-                    <div class="sidebar-item" data-target="pengguna"><i class="fa-solid fa-user-gear"></i> Manajemen Akun</div>
-                    
-                    <hr class="sidebar-divider">
-                    
-                    <span class="sidebar-label">SISTEM</span>
-                    <div class="sidebar-item" onclick="alert('Aplikasi versi 1.5.0 - SMANSALA')"><i class="fa-solid fa-circle-info"></i> Info Aplikasi</div>
-                    <div class="sidebar-item logout-sidebar-btn"><i class="fa-solid fa-right-from-bracket"></i> Keluar Aplikasi</div>
-                </div>
+    <div class="app-container" id="main-container">
+        
+        <div id="panel-awal" class="panel active">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 20px;">
+                <img src="https://jtvfacdloqykdlbiariy.supabase.co/storage/v1/object/sign/Logo_SMANSALA/Logo_SMANSALA./SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81NTAwOWFiNi00ODQ2LTRlNDQtYjRjMi03NjZiYjAwODkyMzkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1NNQU5TQUxBL0xvZ29fU01BTlNBTEEuL1NNQU5TQUxBLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODA5Nzc5MzgsImV4cCI6MTgxMjUxMzkzOH0.IXgJFY5zqaJs6RxJIU0juZI31arY7GcJyO7WwsS3CJE" 
+                     alt="Logo_SMANSALA" style="width: 85px; height: auto; margin-bottom: 15px;">
+                <header style="text-align: center;">
+                    <h1 class="portal-title">SIASSMANSALA</h1>
+                </header>
             </div>
-        </div>
-
-        <div id="page-login" class="login-wrapper page-section active">
-            <div class="brand-section">
-                <div class="school-logo">
-                    <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Photo/SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5n" alt="Logo SMANSALA">
-                </div>
-                <h1 class="app-title">SIASMANSALAA</h1>
-                <p class="app-subtitle">SISTEM INFORMASI AKADEMIK<br>SMAN 1</p>
-            </div>
-
-            <div class="login-box">
-                <form id="login-form">
-                    <div class="field-group">
-                        <span class="field-icon"><i class="fa-solid fa-user"></i></span>
-                        <input type="text" id="username" required placeholder="Username / Nama" value="Admin Guru">
-                    </div>
-                    
-                    <div class="field-group">
-                        <span class="field-icon"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" id="password" required placeholder="Password" value="12345">
-                        <span class="eye-icon" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
-                    </div>
-                    
-                    <button type="submit" class="btn-login ripple">LOGIN</button>
-                    <p class="helper-text">Belum punya akun? <a href="#" onclick="alert('Silahkan hubungi tim IT SMANSALA')">Hubungi Admin</a></p>
-                </form>
-            </div>
-        </div>
-
-        <div id="page-dashboard" class="dashboard-container page-section">
-            <header class="app-header">
-                <div class="header-top-row">
-                    <button class="header-action-btn" id="btn-open-sidebar"><i class="fa-solid fa-bars"></i></button>
-                    <div class="header-center-title">
-                        <h2>SIASMANSALAA</h2>
-                        <p>Selamat datang, <span id="user-display">Admin Guru</span></p>
-                    </div>
-                    <button class="header-action-btn" id="btn-profil-top"><i class="fa-solid fa-circle-user"></i></button>
-                </div>
-            </header>
-
-            <main class="app-content">
-                <section class="info-banner" style="justify-content: center; align-items: center; padding: 1.5rem;">
-                    <div class="banner-icon" style="font-size: 2.5rem;"><i class="fa-solid fa-graduation-cap"></i></div>
-                </section>
-
-                <section class="menu-section">
-                    <h3 class="section-label">MENU UTAMA</h3>
-                    <div class="menu-grid">
-                        <div class="menu-card ripple" id="menu-ke-kelas">
-                            <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-                            <div class="card-info"><h4>Kelas</h4><p>Kelola Data Kelas</p></div>
-                        </div>
-                        <div class="menu-card ripple" id="menu-ke-siswa">
-                            <div class="card-icon"><i class="fa-solid fa-user"></i></div>
-                            <div class="card-info"><h4>Siswa</h4><p>Semua Siswa Global</p></div>
-                        </div>
-                        <div class="menu-card active-card ripple" id="menu-ke-nilai">
-                            <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
-                            <div class="card-info"><h4>Nilai</h4><p>Rekap Semua Nilai</p></div>
-                        </div>
-                        <div class="menu-card ripple" id="menu-ke-mapel">
-                            <div class="card-icon"><i class="fa-solid fa-book-bookmark"></i></div>
-                            <div class="card-info"><h4>Mata Pelajaran</h4><p>Kelola Mapel</p></div>
-                        </div>
-                        <div class="menu-card ripple" id="menu-ke-pengguna">
-                            <div class="card-icon"><i class="fa-solid fa-user-gear"></i></div>
-                            <div class="card-info"><h4>Pengguna</h4><p>Kelola Pengguna</p></div>
-                        </div>
-                        <div class="menu-card ripple" id="btn-logout">
-                            <div class="card-icon logout-icon-color"><i class="fa-solid fa-right-from-bracket"></i></div>
-                            <div class="card-info"><h4>Logout</h4><p>Keluar Aplikasi</p></div>
-                        </div>
-                    </div>
-                </section>
-            </main>
-
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-        <div id="page-kelas" class="kelas-container page-section">
-            <header class="sub-header">
-                <button class="btn-back back-to-dashboard-trigger"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Daftar Kelas</h2>
-                <button class="btn-add" id="btn-open-modal-tambah"><i class="fa-solid fa-plus"></i></button>
-            </header>
-
-            <main class="app-content">
-                <div class="search-section">
-                    <div class="search-bar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="search-kelas-input" placeholder="Cari kelas...">
-                    </div>
-                </div>
-                <div class="kelas-list" id="daftar-kelas-render"></div>
-            </main>
-
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-        <div id="page-siswa-global" class="siswa-container page-section">
-            <header class="sub-header">
-                <button class="btn-back back-to-dashboard-trigger"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Data Semua Siswa</h2>
-                <button class="btn-add" id="btn-open-modal-siswa-global"><i class="fa-solid fa-plus"></i></button>
-            </header>
-
-            <main class="app-content">
-                <div class="search-section">
-                    <div class="search-bar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="search-siswa-global-input" placeholder="Cari nama, NIS, atau kelas...">
-                    </div>
-                </div>
-                <div class="siswa-list" id="daftar-siswa-global-render"></div>
-            </main>
-
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-        <div id="page-semua-nilai" class="kelas-container page-section">
-            <header class="sub-header">
-                <button class="btn-back back-to-dashboard-trigger"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Rekap Nilai Global</h2>
-                <div style="width:24px;"></div>
-            </header>
-
-            <main class="app-content">
-                <div class="search-section">
-                    <div class="search-bar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="search-all-nilai-input" placeholder="Cari siswa, kelas, atau mapel...">
-                    </div>
-                </div>
-                <div style="padding: 0.75rem 1.25rem;">
-                    <div class="nilai-list-box" id="render-semua-nilai-global"></div>
-                </div>
-            </main>
-
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-        <div id="page-detail-siswa" class="detail-siswa-container page-section">
-            <header class="sub-header">
-                <button class="btn-back" id="btn-back-to-global-siswa"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Detail Siswa</h2>
-                <div style="width: 24px;"></div>
-            </header>
-
-            <main class="app-content detail-layout-scroll">
-                <div class="siswa-profile-card">
-                    <div class="profile-avatar-wrapper">
-                        <img id="detail-avatar-img" src="" alt="Avatar">
-                    </div>
-                    <div class="profile-info">
-                        <h3 id="detail-nama-siswa">-</h3>
-                        <p>NIS: <span id="detail-nis-siswa">-</span></p>
-                        <p>Kelas: <span id="detail-kelas-siswa">-</span></p>
-                    </div>
-                </div>
-
-                <div class="daftar-nilai-section">
-                    <h4 class="daftar-nilai-title">DAFTAR NILAI SISWA</h4>
-                    <div class="nilai-list-box" id="render-nilai-siswa"></div>
-                </div>
-            </main>
-
-            <div class="bottom-action-container">
-                <button class="btn-tambah-nilai-trigger ripple" id="btn-go-to-tambah-nilai">
-                    <i class="fa-solid fa-plus"></i> Tambah Nilai
-                </button>
-            </div>
-        </div>
-
-        <div id="page-form-nilai" class="form-nilai-container page-section">
-            <header class="sub-header">
-                <button class="btn-back" id="btn-back-to-detail-siswa"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Tambah / Edit Nilai</h2>
-                <div style="width: 24px;"></div>
-            </header>
-
-            <main class="app-content form-nilai-body">
-                <div class="form-card-inner">
-                    <form id="main-nilai-form">
-                        <div class="input-form-group">
-                            <label for="select-mapel">Mata Pelajaran</label>
-                            <div class="select-wrapper">
-                                <select id="select-mapel" required>
-                                    <option value="" disabled selected>Pilih Mata Pelajaran</option>
-                                    <option value="Matematika">Matematika</option>
-                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                                    <option value="IPA">IPA</option>
-                                    <option value="IPS">IPS</option>
-                                    <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
-                                    <option value="Seni Budaya">Seni Budaya</option>
-                                    <option value="PJOK">PJOK</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="input-form-group">
-                            <label for="input-skor-nilai">Nilai</label>
-                            <input type="number" id="input-skor-nilai" required min="0" max="100" placeholder="Contoh: 90">
-                        </div>
-
-                        <div class="input-form-group">
-                            <label for="input-keterangan">Keterangan (Opsional)</label>
-                            <textarea id="input-keterangan" rows="4" placeholder="Masukkan keterangan"></textarea>
-                        </div>
-
-                        <div class="form-nilai-actions">
-                            <button type="submit" class="btn-submit-nilai ripple">Simpan Nilai</button>
-                            <button type="button" class="btn-delete-nilai ripple" id="btn-hapus-nilai-data">Hapus Nilai</button>
-                        </div>
-                    </form>
-                </div>
-            </main>
-        </div>
-
-        <div id="page-mapel" class="kelas-container page-section">
-            <header class="sub-header">
-                <button class="btn-back back-to-dashboard-trigger"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Mata Pelajaran</h2>
-                <div style="width:24px;"></div>
-            </header>
-            <main class="app-content">
-                <div style="padding:1.5rem; display:flex; flex-direction:column; gap:0.75rem;" id="list-mapel-global"></div>
-            </main>
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-        <div id="page-pengguna" class="detail-siswa-container page-section">
-            <header class="sub-header">
-                <button class="btn-back back-to-dashboard-trigger"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2>Profil Pengguna</h2>
-                <div style="width:24px;"></div>
-            </header>
-            <main class="app-content" style="padding:1.5rem;">
-                <div class="siswa-profile-card" style="margin:0 0 1.5rem 0;">
-                    <div class="profile-avatar-wrapper" style="background:#1967d2; color:white; font-size:1.5rem;">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <div class="profile-info">
-                        <h3>Admin Guru SMANSALA</h3>
-                        <p>NIP: 19870112 201503 1 002</p>
-                        <p>Status: Administrator Utama</p>
-                    </div>
-                </div>
-                <button class="btn-submit-nilai ripple" style="background-color:#dc2626;" id="btn-logout-alt">Keluar Akun</button>
-            </main>
-            <nav class="bottom-nav">
-                <div class="nav-item" data-target="dashboard"><i class="fa-solid fa-house"></i><span>Beranda</span></div>
-                <div class="nav-item" data-target="kelas"><i class="fa-solid fa-school"></i><span>Kelas</span></div>
-                <div class="nav-item" data-target="siswa-global"><i class="fa-solid fa-user-graduate"></i><span>Siswa</span></div>
-                <div class="nav-item" data-target="semua-nilai"><i class="fa-solid fa-file-invoice"></i><span>Nilai</span></div>
-                <div class="nav-item" data-target="pengguna"><i class="fa-solid fa-user"></i><span>Akun</span></div>
-            </nav>
-        </div>
-
-    </div>
-
-        <div class="modal-overlay" id="form-siswa-global-modal">
-        <div class="modal-box">
-            <h3>Tambah Siswa Baru</h3>
-            <form id="form-data-siswa-global">
-                <div class="modal-field"><label>Nama Lengkap Siswa</label><input type="text" id="input-nama-siswa-g" required placeholder="Masukkan nama siswa..."></div>
-                <div class="modal-field"><label>NIS Siswa</label><input type="text" id="input-nis-siswa-g" required placeholder="Contoh: 10007"></div>
-                <div class="modal-field">
-                    <label>Pilih Kelas</label>
-                    <div class="select-wrapper">
-                        <select id="select-kelas-siswa-g" required></select>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel close-modal-btn">Batal</button>
-                    <button type="submit" class="btn-save ripple">Tambahkan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pages = {
-                login: document.getElementById('page-login'),
-                dashboard: document.getElementById('page-dashboard'),
-                kelas: document.getElementById('page-kelas'),
-                siswaGlobal: document.getElementById('page-page-siswa-global') || document.getElementById('page-siswa-global'),
-                semuaNilai: document.getElementById('page-semua-nilai'),
-                detail: document.getElementById('page-detail-siswa'),
-                formNilai: document.getElementById('page-form-nilai'),
-                mapel: document.getElementById('page-mapel'),
-                pengguna: document.getElementById('page-pengguna')
-            };
-
-            const sidebarMenu = document.getElementById('sidebar-menu');
-            let currentPage = pages.login;
-            let siswaAktifObj = null;
-            let modeEditMapel = null;
-
-            // Database Relasional Mockup
-            let databaseKelas = [
-                { id: 1, nama: "Kelas 10A", siswa: 4 },
-                { id: 2, nama: "Kelas 10B", siswa: 2 },
-                { id: 3, nama: "Kelas 11.F1", siswa: 1 },
-                { id: 4, nama: "Kelas 11.F2", siswa: 0 }
-            ];
-
-            let databaseSiswa = [
-                { id: 1, kelasId: 1, nama: "Andi Pratama", nis: "10001", avatarSeed: "Andi" },
-                { id: 2, kelasId: 1, nama: "Siti Aisyah", nis: "10002", avatarSeed: "Siti" },
-                { id: 3, kelasId: 1, nama: "Budi Santoso", nis: "10003", avatarSeed: "Budi" },
-                { id: 4, kelasId: 1, nama: "Dewi Lestari", nis: "10004", avatarSeed: "Dewi" },
-                { id: 5, kelasId: 2, nama: "Rian Hidayat", nis: "10005", avatarSeed: "Rian" },
-                { id: 6, kelasId: 2, nama: "Larasati Putri", nis: "10006", avatarSeed: "Laras" },
-                { id: 7, kelasId: 3, nama: "Fajar Nugraha", nis: "10007", avatarSeed: "Fajar" }
-            ];
-
-            let databaseNilai = [
-                { id: 1, siswaId: 1, mapel: "Matematika", nilai: 90, icon: "fa-solid fa-calculator", warna: "#1967d2" },
-                { id: 2, siswaId: 1, mapel: "Bahasa Indonesia", nilai: 88, icon: "fa-solid fa-book-open", warna: "#6366f1" },
-                { id: 3, siswaId: 2, mapel: "Matematika", nilai: 95, icon: "fa-solid fa-calculator", warna: "#1967d2" },
-                { id: 4, siswaId: 3, mapel: "IPA", nilai: 82, icon: "fa-solid fa-flask", warna: "#10b981" },
-                { id: 5, siswaId: 5, mapel: "Bahasa Inggris", nilai: 87, icon: "fa-solid fa-language", warna: "#f59e0b" },
-                { id: 6, siswaId: 7, mapel: "Matematika", nilai: 79, icon: "fa-solid fa-calculator", warna: "#1967d2" }
-            ];
-
-            const metaMapel = {
-                "Matematika": { icon: "fa-solid fa-calculator", warna: "#1967d2" },
-                "Bahasa Indonesia": { icon: "fa-solid fa-book-open", warna: "#6366f1" },
-                "Bahasa Inggris": { icon: "fa-solid fa-language", warna: "#f59e0b" },
-                "IPA": { icon: "fa-solid fa-flask", warna: "#10b981" },
-                "IPS": { icon: "fa-solid fa-earth-americas", warna: "#ef4444" },
-                "Pendidikan Pancasila": { icon: "fa-solid fa-shield-halved", warna: "#06b6d4" },
-                "Seni Budaya": { icon: "fa-solid fa-palette", warna: "#8b5cf6" },
-                "PJOK": { icon: "fa-solid fa-medal", warna: "#f97316" }
-            };
-
-            function navigasiKe(pageTujuan) {
-                if (currentPage === pageTujuan) return;
-                currentPage.classList.add('fade-out');
-                setTimeout(() => {
-                    currentPage.classList.remove('active', 'fade-out');
-                    pageTujuan.classList.add('active', 'fade-in');
-                    currentPage = pageTujuan;
-                    setTimeout(() => { pageTujuan.classList.remove('fade-in'); }, 180);
-                    updateNavHighlight();
-                    tutupSidebarMenu();
-                }, 180);
-            }
-
-            function updateNavHighlight() {
-                let currentTarget = "dashboard";
-                if (currentPage === pages.kelas) currentTarget = "kelas";
-                else if (currentPage === pages.siswaGlobal || currentPage === pages.detail) currentTarget = "siswa-global";
-                else if (currentPage === pages.semuaNilai) currentTarget = "semua-nilai";
-                else if (currentPage === pages.mapel) currentTarget = "mapel";
-                else if (currentPage === pages.pengguna) currentTarget = "pengguna";
-
-                document.querySelectorAll('.bottom-nav, .sidebar-content').forEach(container => {
-                    container.querySelectorAll('.nav-item, .sidebar-item').forEach(item => {
-                        if (item.getAttribute('data-target') === currentTarget) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    });
-                });
-            }
-
-            function bukaSidebarMenu() { sidebarMenu.classList.add('open'); }
-            function tutupSidebarMenu() { sidebarMenu.classList.remove('open'); }
-
-            document.getElementById('btn-open-sidebar').addEventListener('click', bukaSidebarMenu);
-            document.getElementById('btn-close-sidebar').addEventListener('click', tutupSidebarMenu);
-            sidebarMenu.addEventListener('click', (e) => { if (e.target === sidebarMenu) tutupSidebarMenu(); });
-
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const target = this.getAttribute('data-target');
-                    if (target === 'dashboard') navigasiKe(pages.dashboard);
-                    else if (target === 'kelas') { renderKelas(); navigasiKe(pages.kelas); }
-                    else if (target === 'siswa-global') { renderSiswaGlobal(); navigasiKe(pages.siswaGlobal); }
-                    else if (target === 'semua-nilai') { renderSemuaNilaiGlobal(); navigasiKe(pages.semuaNilai); }
-                    else if (target === 'mapel') { renderDaftarMapel(); navigasiKe(pages.mapel); }
-                    else if (target === 'pengguna') navigasiKe(pages.pengguna);
-                });
-            });
-
-            document.querySelector('.logout-sidebar-btn').addEventListener('click', () => navigasiKe(pages.login));
-            document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); navigasiKe(pages.dashboard); });
-            document.getElementById('btn-logout').addEventListener('click', () => navigasiKe(pages.login));
-            document.getElementById('btn-logout-alt').addEventListener('click', () => navigasiKe(pages.login));
-            document.getElementById('btn-profil-top').addEventListener('click', () => navigasiKe(pages.pengguna));
-
-            document.getElementById('menu-ke-kelas').addEventListener('click', () => { renderKelas(); navigasiKe(pages.kelas); });
-            document.getElementById('menu-ke-siswa').addEventListener('click', () => { renderSiswaGlobal(); navigasiKe(pages.siswaGlobal); });
-            document.getElementById('menu-ke-nilai').addEventListener('click', () => { renderSemuaNilaiGlobal(); navigasiKe(pages.semuaNilai); });
-            document.getElementById('menu-ke-mapel').addEventListener('click', () => { renderDaftarMapel(); navigasiKe(pages.mapel); });
-            document.getElementById('menu-ke-pengguna').addEventListener('click', () => navigasiKe(pages.pengguna));
-
-            document.querySelectorAll('.back-to-dashboard-trigger').forEach(b => b.addEventListener('click', () => navigasiKe(pages.dashboard)));
-            document.getElementById('btn-back-to-global-siswa').addEventListener('click', () => { renderSiswaGlobal(); navigasiKe(pages.siswaGlobal); });
-            document.getElementById('btn-back-to-detail-siswa').addEventListener('click', () => { bukaDetailSiswa(siswaAktifObj); navigasiKe(pages.detail); });
-
-            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const target = this.getAttribute('data-target');
-                    if (target === 'dashboard') navigasiKe(pages.dashboard);
-                    else if (target === 'kelas') { renderKelas(); navigasiKe(pages.kelas); }
-                    else if (target === 'siswa-global') { renderSiswaGlobal(); navigasiKe(pages.siswaGlobal); }
-                    else if (target === 'semua-nilai') { renderSemuaNilaiGlobal(); navigasiKe(pages.semuaNilai); }
-                    else if (target === 'mapel') { renderDaftarMapel(); navigasiKe(pages.mapel); }
-                    else if (target === 'pengguna') navigasiKe(pages.pengguna);
-                });
-            });
-
-            // RENDER DATA KELAS
-            const containerKelas = document.getElementById('daftar-kelas-render');
-            function renderKelas() {
-                containerKelas.innerHTML = "";
-                databaseKelas.forEach(kelas => {
-                    const div = document.createElement('div');
-                    div.className = 'kelas-row-card ripple';
-                    div.onclick = () => {
-                        renderSiswaGlobal(kelas.nama); 
-                        document.getElementById('search-siswa-global-input').value = kelas.nama;
-                        navigasiKe(pages.siswaGlobal);
-                    };
-                    div.innerHTML = `
-                        <div class="kelas-row-left">
-                            <div class="kelas-row-icon"><i class="fa-solid fa-users"></i></div>
-                            <div class="kelas-row-text"><h4>${kelas.nama}</h4><p>Jumlah Siswa: ${kelas.siswa} Orang</p></div>
-                        </div>
-                        <div class="kelas-row-actions">
-                            <button class="btn-action-delete ripple" onclick="event.stopPropagation(); hapusKelas(${kelas.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    containerKelas.appendChild(div);
-                });
-            }
-
-            window.hapusKelas = function(id) {
-                if(confirm("Hapus data kelas ini?")) {
-                    databaseKelas = databaseKelas.filter(k => k.id !== id);
-                    renderKelas();
-                }
-            };
-
-            // RENDER HALAMAN DATA SEMUA SISWA GLOBAL (DARI SEMUA KELAS)
-            const containerSiswaGlobal = document.getElementById('daftar-siswa-global-render');
-            function renderSiswaGlobal(filterKeyword = "") {
-                containerSiswaGlobal.innerHTML = "";
-                
-                if (databaseSiswa.length === 0) {
-                    containerSiswaGlobal.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;">Belum ada data siswa.</div>`;
-                    return;
-                }
-
-                let adaData = false;
-
-                databaseSiswa.forEach(siswa => {
-                    const kelas = databaseKelas.find(k => k.id === siswa.kelasId);
-                    const namaKelas = kelas ? kelas.nama : "Tanpa Kelas";
-
-                    if (filterKeyword !== "") {
-                        const kw = filterKeyword.toLowerCase();
-                        const mNama = siswa.nama.toLowerCase().includes(kw);
-                        const mNis = siswa.nis.toLowerCase().includes(kw);
-                        const mKelas = namaKelas.toLowerCase().includes(kw);
-                        if (!mNama && !mNis && !mKelas) return;
-                    }
-
-                    adaData = true;
-
-                    const row = document.createElement('div');
-                    row.className = 'siswa-row-card ripple';
-                    row.onclick = () => bukaDetailSiswa(siswa);
-                    row.innerHTML = `
-                        <div class="siswa-row-left">
-                            <div class="siswa-avatar-frame"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=${siswa.avatarSeed}" alt="Siswa"></div>
-                            <div class="siswa-row-text">
-                                <h4>${siswa.nama}</h4>
-                                <p>NIS: ${siswa.nis} &bull; <span style="color:#1967d2; font-weight:600;">${namaKelas}</span></p>
-                            </div>
-                        </div>
-                        <div class="siswa-row-right-actions"><span class="chevron-arrow"><i class="fa-solid fa-chevron-right"></i></span></div>
-                    `;
-                    containerSiswaGlobal.appendChild(row);
-                });
-
-                if(!adaData) {
-                    containerSiswaGlobal.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;">Siswa tidak ditemukan.</div>`;
-                }
-            }
-
-            document.getElementById('search-siswa-global-input').addEventListener('input', function(e) {
-                renderSiswaGlobal(e.target.value);
-            });
-
-            // DETAIL SISWA INDIVIDU
-            const containerNilai = document.getElementById('render-nilai-siswa');
-            function bukaDetailSiswa(siswa) {
-                siswaAktifObj = siswa;
-                const cariKelas = databaseKelas.find(k => k.id === siswa.kelasId);
-                const namaKelasSiswa = cariKelas ? cariKelas.nama : "-";
-                
-                document.getElementById('detail-nama-siswa').innerText = siswa.nama;
-                document.getElementById('detail-nis-siswa').innerText = siswa.nis;
-                document.getElementById('detail-kelas-siswa').innerText = namaKelasSiswa;
-                document.getElementById('detail-avatar-img').src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${siswa.avatarSeed}`;
-                
-                containerNilai.innerHTML = "";
-                const nilaiSiswa = databaseNilai.filter(n => n.siswaId === siswa.id);
-
-                if (nilaiSiswa.length === 0) {
-                    containerNilai.innerHTML = `<div style="padding:30px; text-align:center; color:#94a3b8; font-size:0.85rem;">Mata pelajaran belum dinilai.</div>`;
-                    return;
-                }
-
-                nilaiSiswa.forEach(n => {
-                    const item = document.createElement('div');
-                    item.className = 'nilai-row-item ripple';
-                    item.onclick = () => picuEditNilaiHalaman6(n);
-                    item.innerHTML = `
-                        <div class="nilai-item-left">
-                            <div class="nilai-mapel-icon-circle" style="color: ${n.warna}; background-color: ${n.warna}12"><i class="${n.icon}"></i></div>
-                            <span class="nilai-mapel-name">${n.mapel}</span>
-                        </div>
-                        <div class="nilai-item-right">
-                            <span class="nilai-score-badge" style="color: ${n.warna}">${n.nilai}</span>
-                            <button class="btn-nilai-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>
-                    `;
-                    containerNilai.appendChild(item);
-                });
-                navigasiKe(pages.detail);
-            }
-
-            // REKAP DATA GLOBAL SEMUA NILAI
-            const containerSemuaNilaiGlobal = document.getElementById('render-semua-nilai-global');
-            function renderSemuaNilaiGlobal(filterKeyword = "") {
-                containerSemuaNilaiGlobal.innerHTML = "";
-                
-                if (databaseNilai.length === 0) {
-                    containerSemuaNilaiGlobal.innerHTML = `<div style="padding:30px; text-align:center; color:#94a3b8; font-size:0.85rem;">Belum ada nilai terinput.</div>`;
-                    return;
-                }
-
-                let adaDataTerpilih = false;
-
-                databaseNilai.forEach(n => {
-                    const siswa = databaseSiswa.find(s => s.id === n.siswaId);
-                    if (!siswa) return;
-                    
-                    const kelas = databaseKelas.find(k => k.id === siswa.kelasId);
-                    const namaKelas = kelas ? kelas.nama : "-";
-
-                    if (filterKeyword !== "") {
-                        const keyword = filterKeyword.toLowerCase();
-                        const cocokNama = siswa.nama.toLowerCase().includes(keyword);
-                        const cocokMapel = n.mapel.toLowerCase().includes(keyword);
-                        const cocokKelas = namaKelas.toLowerCase().includes(keyword);
-                        if (!cocokNama && !cocokMapel && !cocokKelas) return;
-                    }
-
-                    adaDataTerpilih = true;
-
-                    const rowItem = document.createElement('div');
-                    rowItem.className = 'nilai-row-item ripple';
-                    rowItem.onclick = () => bukaDetailSiswa(siswa);
-                    rowItem.innerHTML = `
-                        <div class="nilai-item-left">
-                            <div class="nilai-mapel-icon-circle" style="color: ${n.warna}; background-color: ${n.warna}12">
-                                <i class="${n.icon}"></i>
-                            </div>
-                            <div style="display:flex; flex-direction:column; gap:0.15rem;">
-                                <span class="nilai-mapel-name" style="font-size:0.88rem;">${siswa.nama}</span>
-                                <span style="font-size:0.7rem; color:#64748b; font-weight:500;">${namaKelas} &bull; ${n.mapel}</span>
-                            </div>
-                        </div>
-                        <div class="nilai-item-right">
-                            <span class="nilai-score-badge" style="color: ${n.warna}; font-weight:800;">${n.nilai}</span>
-                        </div>
-                    `;
-                    containerSemuaNilaiGlobal.appendChild(rowItem);
-                });
-
-                if(!adaDataTerpilih) {
-                    containerSemuaNilaiGlobal.innerHTML = `<div style="padding:30px; text-align:center; color:#94a3b8; font-size:0.85rem;">Pencarian tidak ditemukan.</div>`;
-                }
-            }
-
-            document.getElementById('search-all-nilai-input').addEventListener('input', function(e) {
-                renderSemuaNilaiGlobal(e.target.value);
-            });
-
-            function renderDaftarMapel() {
-                const mapelBox = document.getElementById('list-mapel-global');
-                mapelBox.innerHTML = "";
-                Object.keys(metaMapel).forEach(key => {
-                    const item = metaMapel[key];
-                    const div = document.createElement('div');
-             ditemukan.</div>`;
-                }
-            }
-
-            document.getElementById('search-all-nilai-input').addEventListener('input', function(e) {
-                renderSemuaNilaiGlobal(e.target.value);
-            });
-
-            function renderDaftarMapel() {
-                const mapelBox = document.getElementById('list-mapel-global');
-                mapelBox.innerHTML = "";
-                Object.keys(metaMapel).forEach(key => {
-                    const item = metaMapel[key];
-                    const div = document.createElement('div');
-                    div.className = "nilai-row-item ripple";
-                    div.style.background = "#ffffff";
-                    div.style.borderRadius = "0.75rem";
-                    div.style.border = "1px solid #edf2f7";
-                    div.innerHTML = `
-                        <div class="nilai-item-left">
-                            <div class="nilai-mapel-icon-circle" style="color: ${item.warna}; background-color: ${item.warna}12"><i class="${item.icon}"></i></div>
-                            <span class="nilai-mapel-name">${key}</span>
-                        </div>
-                        <span style="font-size:0.75rem; color:#1967d2; font-weight:600; background:#eff6ff; padding:0.25rem 0.6rem; border-radius:0.4rem;">Wajib</span>
-                    `;
-                    mapelBox.appendChild(div);
-                });
-            }
-
-            document.getElementById('btn-go-to-tambah-nilai').addEventListener('click', () => {
-                modeEditMapel = null;
-                document.getElementById('main-nilai-form').reset();
-                document.getElementById('select-mapel').disabled = false;
-                document.getElementById('btn-hapus-nilai-data').style.display = 'none';
-                navigasiKe(pages.formNilai);
-            });
-
-            function picuEditNilaiHalaman6(nilaiObj) {
-                modeEditMapel = nilaiObj.mapel;
-                document.getElementById('select-mapel').value = nilaiObj.mapel;
-                document.getElementById('select-mapel').disabled = true;
-                document.getElementById('input-skor-nilai').value = nilaiObj.nilai;
-                document.getElementById('input-keterangan').value = nilaiObj.keterangan || "";
-                document.getElementById('btn-hapus-nilai-data').style.display = 'block';
-                navigasiKe(pages.formNilai);
-            }
-
-            document.getElementById('main-nilai-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const mapelDipilih = document.getElementById('select-mapel').value;
-                const skorNilai = parseInt(document.getElementById('input-skor-nilai').value);
-                const ketInput = document.getElementById('input-keterangan').value;
-
-                if (modeEditMapel) {
-                    databaseNilai = databaseNilai.map(n => {
-                        if (n.siswaId === siswaAktifObj.id && n.mapel === modeEditMapel) {
-                            return { ...n, nilai: skorNilai, keterangan: ketInput };
-                        }
-                        return n;
-                    });
-                } else {
-                    const cekAda = databaseNilai.find(n => n.siswaId === siswaAktifObj.id && n.mapel === mapelDipilih);
-                    if (cekAda) { alert(`Nilai pelajaran ${mapelDipilih} sudah terisi.`); return; }
-                    
-                    const meta = metaMapel[mapelDipilih] || { icon: "fa-solid fa-book", warna: "#475569" };
-                    databaseNilai.push({
-                        id: databaseNilai.length + 1,
-                        siswaId: siswaAktifObj.id,
-                        mapel: mapelDipilih,
-                        nilai: skorNilai,
-                        icon: meta.icon,
-                        warna: meta.warna,
-                        keterangan: ketInput
-                    });
-                }
-
-                bukaDetailSiswa(siswaAktifObj);
-                navigasiKe(pages.detail);
-            });
-
-            document.getElementById('btn-hapus-nilai-data').addEventListener('click', () => {
-                if (confirm(`Hapus nilai ${modeEditMapel}?`)) {
-                    databaseNilai = databaseNilai.filter(n => !(n.siswaId === siswaAktifObj.id && n.mapel === modeEditMapel));
-                    bukaDetailSiswa(siswaAktifObj);
-                    navigasiKe(pages.detail);
-                }
-            });
-
-            document.querySelectorAll('.close-modal-btn').forEach(b => b.addEventListener('click', () => {
-                document.getElementById('form-kelas-modal').classList.remove('open');
-                document.getElementById('form-siswa-global-modal').classList.remove('open');
-            }));
             
-            document.getElementById('btn-open-modal-tambah').addEventListener('click', () => document.getElementById('form-kelas-modal').classList.add('open'));
-            document.getElementById('form-data-kelas').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const nama = document.getElementById('input-nama-kelas').value;
-                const jml = document.getElementById('input-jumlah-siswa').value;
-                databaseKelas.push({ id: databaseKelas.length + 1, nama: nama, siswa: parseInt(jml) });
-                document.getElementById('form-kelas-modal').classList.remove('open');
-                document.getElementById('form-data-kelas').reset();
-                renderKelas();
-            });
+            <div class="instansi-box">
+                <div class="instansi-main">SMAN 1 LEMAHABANG</div>
+                <div class="instansi-sub">KABUPATEN CIREBON</div>
+                <div class="running-text-container">
+                    <marquee style="color: #2563eb; font-size: 11px; font-weight: bold; letter-spacing: 1px;">
+                        -- SMAN 1 LEMAHABANG -- -- LA, BERPRESTASI MENUJU SEKOLAH JUARA -- -- SIASSMANSALA SYSTEM --
+                    </marquee>
+                </div>
+            </div>
 
-            // MODAL TAMBAH SISWA GLOBAL & ISI OPSI SELEKSI KELAS
-            const modalSiswaGlobal = document.getElementById('form-siswa-global-modal');
-            const selectKelasSiswaG = document.getElementById('select-kelas-siswa-g');
+            <div style="margin-top: 25px; width: 100%;">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" class="input-field" placeholder="Masukkan username..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="input-field" placeholder="Masukkan password...">
+                </div>
+                <button type="button" class="btn-primary" id="tombol-masuk-sias">MASUK</button>
+            </div>
+        </div>
 
-            document.getElementById('btn-open-modal-siswa-global').addEventListener('click', () => {
-                selectKelasSiswaG.innerHTML = "";
-                databaseKelas.forEach(k => {
-                    const opt = document.createElement('option');
-                    opt.value = k.id;
-                    opt.innerText = k.nama;
-                    selectKelasSiswaG.appendChild(opt);
-                });
-                modalSiswaGlobal.classList.add('open');
-            });
-
-            document.getElementById('form-data-siswa-global').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const nm = document.getElementById('input-nama-siswa-g').value;
-                const ns = document.getElementById('input-nis-siswa-g').value;
-                const kId = parseInt(selectKelasSiswaG.value);
-
-                databaseSiswa.push({ id: databaseSiswa.length + 1, kelasId: kId, nama: nm, nis: ns, avatarSeed: nm });
-                databaseKelas = databaseKelas.map(k => k.id === kId ? {...k, siswa: k.siswa + 1} : k);
+        <div id="panel-menu" class="panel">
+            <div class="dashboard-layout">
                 
-                modalSiswaGlobal.classList.remove('open');
-                document.getElementById('form-data-siswa-global').reset();
-                renderSiswaGlobal();
-            });
+                <div class="sidebar-tabs">
+                    <div class="sidebar-brand">
+                        <img src="https://jtvfacdloqykdlbiariy.supabase.co/storage/v1/object/sign/Logo_SMANSALA/Logo_SMANSALA./SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81NTAwOWFiNi00ODQ2LTRlNDQtYjRjMi03NjZiYjAwODkyMzkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1NNQU5TQUxBL0xvZ29fU01BTlNBTEEuL1NNQU5TQUxBLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODA5Nzc5MzgsImV4cCI6MTgxMjUxMzkzOH0.IXgJFY5zqaJs6RxJIU0juZI31arY7GcJyO7WwsS3CJE" alt="Logo SMANSALA">
+                        <span>MENU UTAMA</span>
+                    </div>
+                    <button class="tab-link active" id="btn-tab-input">Input Data</button>
+                    <button class="tab-link" id="btn-tab-semua">Seluruh Siswa</button>
+                    <button class="tab-link" id="btn-tab-kelas">Setiap Kelas</button>
+                    <button class="tab-link" id="btn-tab-mapel">Mata Pelajaran</button>
+                    <button class="tab-link" id="btn-tab-stats">Menu Nilai</button>
+                    <button class="tab-link" id="btn-tab-settings">Settings</button>
+                    <button class="tab-link btn-logout-side" id="btn-tab-logout">Keluar</button>
+                </div>
 
-            const togglePassword = document.getElementById('toggle-password');
-            const passwordInput = document.getElementById('password');
-            if (togglePassword && passwordInput) {
-                togglePassword.addEventListener('click', () => {
-                    const isPass = passwordInput.type === 'password';
-                    passwordInput.type = isPass ? 'text' : 'password';
-                    togglePassword.querySelector('i').className = isPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
-                });
-            }
-        });
-    </script>
+                <div class="content-tabs">
+                    
+                    <div id="sub-input" class="tab-content active">
+                        <h3 class="section-title">Formulir Input Data</h3>
+                        <div class="form-group">
+                            <label for="menu-kelas">Menu Kelas</label>
+                            <select id="menu-kelas" class="input-field">
+                                <option value="">-- Pilih Kelas --</option>
+                                <optgroup label="Kelas X">
+                                    <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
+                                    <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
+                                </optgroup>
+                                <optgroup label="Kelas XI">
+                                    <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
+                                    <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-nama">Menu Nama Siswa</label>
+                            <input type="text" id="menu-nama" class="input-field" placeholder="Nama lengkap...">
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-mapel">Menu Mata Pelajaran</label>
+                            <select id="menu-mapel" class="input-field"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-nilai">Menu Nilai</label>
+                            <input type="number" id="menu-nilai" class="input-field" placeholder="0-100" min="0" max="100">
+                        </div>
+                        <button type="button" class="btn-primary" id="btn-simpan-cloud">SIMPAN DATA</button>
+                    </div>
+
+                    <div id="sub-seluruh-siswa" class="tab-content">
+                        <h3 class="section-title">Data Seluruh Siswa</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>Mapel</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabel-semua-siswa">
+                                    <tr><td colspan="4" style="text-align:center; color:#64748b;">Memuat data...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="sub-setiap-kelas" class="tab-content">
+                        <h3 class="section-title">Filter Setiap Kelas</h3>
+                        <div class="form-group">
+                            <select id="filter-kelas-dropdown" class="input-field">
+                                <option value="">-- Pilih Kelas untuk Dilihat --</option>
+                                <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
+                                <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
+                                <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
+                                <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Mapel</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabel-per-kelas">
+                                    <tr><td colspan="3" style="text-align:center; color:#64748b;">Silakan pilih kelas terlebih dahulu.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="sub-mata-pelajaran" class="tab-content">
+                        <h3 class="section-title">Pengelolaan Mata Pelajaran</h3>
+                        <button class="btn-primary" style="padding:10px; margin-bottom:15px; font-size:12px; width:auto;" id="btn-tambah-mapel">+ Tambah Mapel Baru</button>
+                        <ul class="list-mapel-wrapper" id="daftar-mapel-list"></ul>
+                    </div>
+
+                    <div id="sub-nilai-stats" class="tab-content">
+                        <h3 class="section-title">Analisis Rekap Nilai</h3>
+                        <div class="stats-card-grid">
+                            <div class="stat-box">
+                                <div class="stat-title">Nilai Tertinggi</div>
+                                <div class="stat-value" id="stat-max">-</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-title">Nilai Terendah</div>
+                                <div class="stat-value" id="stat-min">-</div>
+                            </div>
+                            <div class="stat-box" style="grid-column: span 2;">
+                                <div class="stat-title">Rata-Rata Nilai Sekolah</div>
+                                <div class="stat-value" id="stat-avg" style="color:#2563eb;">-</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" style="margin-top:15px;" id="btn-refresh-stats">Refresh Analisis Nilai</button>
+                    </div>
+
+                    <div id="sub-settings" class="tab-content">
+                        <h3 class="section-title">Pengaturan Sistem</h3>
+                        <div class="form-group">
+                            <label>Petugas Aktif</label>
+                            <input type="text" id="menu-pengguna" class="input-field" readonly style="background:#e2e8f0; color:#475569;">
+                        </div>
+                        <div class="form-group">
+                            <label>Status Server Database</label>
+                            <div style="font-size:13px; font-weight:bold; color:#16a34a; padding:10px; background:#f0fdf4; border-radius:10px; border:1px solid #bbf7d0;">
+                                ● Connected to Firebase Realtime Database
+                            </div>
+                        </div>
+                        <button class="btn-text" style="color:#ef4444; font-weight:bold; text-align:left; padding:0;" id="btn-reset-mapel">Reset Pilihan Mapel ke Default</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=1.2"></script>
 </body>
 </html>
