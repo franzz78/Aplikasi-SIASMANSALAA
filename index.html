@@ -154,16 +154,24 @@
                 <div id="sub-biometric" class="tab-content">
                     <h3 class="section-title">Pengaturan Biometrik</h3>
                     
-                    <div id="hardware-status-box" class="status-hardware-badge">
+                    <div id="hardware-status-box" class="status-hardware-badge" style="margin-bottom: 15px;">
                         Mendeteksi hardware sensor...
                     </div>
 
-                    <div id="biometric-admin-controls" style="margin-top: 15px;">
-                        <button type="button" class="btn-primary" id="btn-registrasi-sidikjari" style="background: #16a34a; margin-bottom: 20px;">
-                            ➕ Daftarkan Sidik Jari Baru Perangkat Ini
-                        </button>
+                    <div id="biometric-admin-controls">
+                        <div class="form-group">
+                            <label for="bio-nama-label">Nama Pemilik Sidik Jari</label>
+                            <input type="text" id="bio-nama-label" class="input-field" placeholder="Contoh: Jempol Kanan Aa / HP Ibu...">
+                        </div>
+
+                        <div style="text-align: center; margin-top: 20px; margin-bottom: 25px;">
+                            <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">Sentuh tombol di bawah ini untuk memindai sidik jari device:</p>
+                            <button type="button" class="btn-primary" id="btn-registrasi-sidikjari" style="background: #16a34a; width: auto; padding: 12px 25px;">
+                                👆 TEMPELKAN SIDIK JARI DEVICE
+                            </button>
+                        </div>
                         
-                        <h4 style="font-size: 13px; color:#475569; margin-bottom:8px;">📜 Riwayat Aktivitas Biometrik</h4>
+                        <h4 style="font-size: 13px; color:#475569; margin-bottom:8px; border-top: 1px solid #e2e8f0; padding-top: 15px;">📜 Riwayat Aktivitas Biometrik</h4>
                         <div class="table-responsive">
                             <table class="data-table" style="font-size: 11px;">
                                 <thead>
@@ -209,7 +217,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=2.1"></script>
+    <script src="script.js?v=2.2"></script>
 </body>
 </html>
-                                
