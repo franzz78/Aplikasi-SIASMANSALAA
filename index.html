@@ -26,7 +26,7 @@
         
         <div id="panel-awal" class="panel active">
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 20px;">
-                <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Photo/SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQaG90by9TTUFOU0FMQS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNzYzMzAwLCJleHAiOjE4MTMyOTkzMDB9.ukXnYR4jT2Tz_8nrRAQd1Ugdq31yTh8MJ2r2XsYM9hc" 
+                <img src="https://jtvfacdloqykdlbiariy.supabase.co/storage/v1/object/sign/Logo_SMANSALA/Logo_SMANSALA./SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81NTAwOWFiNi00ODQ2LTRlNDQtYjRjMi03NjZiYjAwODkyMzkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1NNQU5TQUxBL0xvZ29fU01BTlNBTEEuL1NNQU5TQUxBLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODA5Nzc5MzgsImV4cCI6MTgxMjUxMzkzOH0.IXgJFY5zqaJs6RxJIU0juZI31arY7GcJyO7WwsS3CJE" 
                      alt="Logo_SMANSALA" style="width: 85px; height: auto; margin-bottom: 15px;">
                 <header style="text-align: center;">
                     <h1 class="portal-title">SIASSMANSALA</h1>
@@ -52,151 +52,157 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" class="input-field" placeholder="Masukkan password...">
                 </div>
-                <button type="button" class="btn-primary" id="tombol-masuk-sias">MASUK</button>
+                
+                <button type="button" class="btn-primary" id="tombol-masuk-sias" style="margin-bottom: 12px;">MASUK</button>
+                
+                <button type="button" class="btn-biometric" id="btn-login-fingerprint">
+                    🔒 MASUK DENGAN SIDIK JARI
+                </button>
             </div>
         </div>
 
         <div id="panel-menu" class="panel">
-            <div class="dashboard-layout">
+            <div class="top-tab-bar">
+                <button class="tab-link active" id="btn-tab-input">Input</button>
+                <button class="tab-link" id="btn-tab-semua">Semua</button>
+                <button class="tab-link" id="btn-tab-kelas">Kelas</button>
+                <button class="tab-link" id="btn-tab-mapel">Mapel</button>
+                <button class="tab-link" id="btn-tab-biometric">Biometrik</button>
+                <button class="tab-link" id="btn-tab-stats">Nilai</button>
+                <button class="tab-link" id="btn-tab-settings">Settings</button>
+                <button class="tab-link btn-logout-top" id="btn-tab-logout">Keluar</button>
+            </div>
+
+            <div class="content-tabs-portrait">
                 
-                <div class="sidebar-tabs">
-                    <div class="sidebar-brand">
-                        <img src="https://jtvfacdloqykdlbiariy.supabase.co/storage/v1/object/sign/Logo_SMANSALA/Logo_SMANSALA./SMANSALA.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81NTAwOWFiNi00ODQ2LTRlNDQtYjRjMi03NjZiYjAwODkyMzkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1NNQU5TQUxBL0xvZ29fU01BTlNBTEEuL1NNQU5TQUxBLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODA5Nzc5MzgsImV4cCI6MTgxMjUxMzkzOH0.IXgJFY5zqaJs6RxJIU0juZI31arY7GcJyO7WwsS3CJE" alt="Logo SMANSALA">
-                        <span>MENU UTAMA</span>
-                    </div>
-                    <button class="tab-link active" id="btn-tab-input">Input Data</button>
-                    <button class="tab-link" id="btn-tab-semua">Seluruh Siswa</button>
-                    <button class="tab-link" id="btn-tab-kelas">Setiap Kelas</button>
-                    <button class="tab-link" id="btn-tab-mapel">Mata Pelajaran</button>
-                    <button class="tab-link" id="btn-tab-stats">Menu Nilai</button>
-                    <button class="tab-link" id="btn-tab-settings">Settings</button>
-                    <button class="tab-link btn-logout-side" id="btn-tab-logout">Keluar</button>
-                </div>
-
-                <div class="content-tabs">
-                    
-                    <div id="sub-input" class="tab-content active">
-                        <h3 class="section-title">Formulir Input Data</h3>
-                        <div class="form-group">
-                            <label for="menu-kelas">Menu Kelas</label>
-                            <select id="menu-kelas" class="input-field">
-                                <option value="">-- Pilih Kelas --</option>
-                                <optgroup label="Kelas X">
-                                    <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
-                                    <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
-                                </optgroup>
-                                <optgroup label="Kelas XI">
-                                    <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
-                                    <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="menu-nama">Menu Nama Siswa</label>
-                            <input type="text" id="menu-nama" class="input-field" placeholder="Nama lengkap...">
-                        </div>
-                        <div class="form-group">
-                            <label for="menu-mapel">Menu Mata Pelajaran</label>
-                            <select id="menu-mapel" class="input-field"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="menu-nilai">Menu Nilai</label>
-                            <input type="number" id="menu-nilai" class="input-field" placeholder="0-100" min="0" max="100">
-                        </div>
-                        <button type="button" class="btn-primary" id="btn-simpan-cloud">SIMPAN DATA</button>
-                    </div>
-
-                    <div id="sub-seluruh-siswa" class="tab-content">
-                        <h3 class="section-title">Data Seluruh Siswa</h3>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Kelas</th>
-                                        <th>Mapel</th>
-                                        <th>Nilai</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabel-semua-siswa">
-                                    <tr><td colspan="4" style="text-align:center; color:#64748b;">Memuat data...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div id="sub-setiap-kelas" class="tab-content">
-                        <h3 class="section-title">Filter Setiap Kelas</h3>
-                        <div class="form-group">
-                            <select id="filter-kelas-dropdown" class="input-field">
-                                <option value="">-- Pilih Kelas untuk Dilihat --</option>
+                <div id="sub-input" class="tab-content active">
+                    <h3 class="section-title">Formulir Input Data</h3>
+                    <div class="form-group">
+                        <label for="menu-kelas">Menu Kelas</label>
+                        <select id="menu-kelas" class="input-field">
+                            <option value="">-- Pilih Kelas --</option>
+                            <optgroup label="Kelas X">
                                 <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
                                 <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
+                            </optgroup>
+                            <optgroup label="Kelas XI">
                                 <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
                                 <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
-                            </select>
-                        </div>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-nama">Menu Nama Siswa</label>
+                        <input type="text" id="menu-nama" class="input-field" placeholder="Nama lengkap...">
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-mapel">Menu Mata Pelajaran</label>
+                        <select id="menu-mapel" class="input-field"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-nilai">Menu Nilai</label>
+                        <input type="number" id="menu-nilai" class="input-field" placeholder="0-100" min="0" max="100">
+                    </div>
+                    <button type="button" class="btn-primary" id="btn-simpan-cloud">SIMPAN DATA</button>
+                </div>
+
+                <div id="sub-seluruh-siswa" class="tab-content">
+                    <h3 class="section-title">Data Seluruh Siswa</h3>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Nama</th><th>Kelas</th><th>Mapel</th><th>Nilai</th></tr>
+                            </thead>
+                            <tbody id="tabel-semua-siswa"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="sub-setiap-kelas" class="tab-content">
+                    <h3 class="section-title">Filter Setiap Kelas</h3>
+                    <div class="form-group">
+                        <select id="filter-kelas-dropdown" class="input-field">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option>X.1</option><option>X.2</option><option>X.3</option><option>X.4</option><option>X.5</option>
+                            <option>X.6</option><option>X.7</option><option>X.8</option><option>X.9</option><option>X.10</option>
+                            <option>XI.F1</option><option>XI.F2</option><option>XI.F3</option><option>XI.F4</option><option>XI.F5</option>
+                            <option>XI.F6</option><option>XI.F7</option><option>XI.F8</option><option>XI.F9</option><option>XI.F10</option>
+                        </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Nama</th><th>Mapel</th><th>Nilai</th></tr>
+                            </thead>
+                            <tbody id="tabel-per-kelas"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="sub-mata-pelajaran" class="tab-content">
+                    <h3 class="section-title">Pengelolaan Mata Pelajaran</h3>
+                    <button class="btn-primary" style="padding:10px; margin-bottom:15px;" id="btn-tambah-mapel">+ Tambah Mapel</button>
+                    <ul class="list-mapel-wrapper" id="daftar-mapel-list"></ul>
+                </div>
+
+                <div id="sub-biometric" class="tab-content">
+                    <h3 class="section-title">Pengaturan Biometrik</h3>
+                    
+                    <div id="hardware-status-box" class="status-hardware-badge">
+                        Mendeteksi hardware sensor...
+                    </div>
+
+                    <div id="biometric-admin-controls" style="margin-top: 15px;">
+                        <button type="button" class="btn-primary" id="btn-registrasi-sidikjari" style="background: #16a34a; margin-bottom: 20px;">
+                            ➕ Daftarkan Sidik Jari Baru Perangkat Ini
+                        </button>
+                        
+                        <h4 style="font-size: 13px; color:#475569; margin-bottom:8px;">📜 Riwayat Aktivitas Biometrik</h4>
                         <div class="table-responsive">
-                            <table class="data-table">
+                            <table class="data-table" style="font-size: 11px;">
                                 <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Mapel</th>
-                                        <th>Nilai</th>
-                                    </tr>
+                                    <tr><th>Waktu</th><th>Aktivitas</th><th>Status</th></tr>
                                 </thead>
-                                <tbody id="tabel-per-kelas">
-                                    <tr><td colspan="3" style="text-align:center; color:#64748b;">Silakan pilih kelas terlebih dahulu.</td></tr>
+                                <tbody id="tabel-log-biometrik">
+                                    <tr><td colspan="3" style="text-align:center; color:#94a3b8;">Tidak ada riwayat.</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
-                    <div id="sub-mata-pelajaran" class="tab-content">
-                        <h3 class="section-title">Pengelolaan Mata Pelajaran</h3>
-                        <button class="btn-primary" style="padding:10px; margin-bottom:15px; font-size:12px; width:auto;" id="btn-tambah-mapel">+ Tambah Mapel Baru</button>
-                        <ul class="list-mapel-wrapper" id="daftar-mapel-list"></ul>
-                    </div>
-
-                    <div id="sub-nilai-stats" class="tab-content">
-                        <h3 class="section-title">Analisis Rekap Nilai</h3>
-                        <div class="stats-card-grid">
-                            <div class="stat-box">
-                                <div class="stat-title">Nilai Tertinggi</div>
-                                <div class="stat-value" id="stat-max">-</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-title">Nilai Terendah</div>
-                                <div class="stat-value" id="stat-min">-</div>
-                            </div>
-                            <div class="stat-box" style="grid-column: span 2;">
-                                <div class="stat-title">Rata-Rata Nilai Sekolah</div>
-                                <div class="stat-value" id="stat-avg" style="color:#2563eb;">-</div>
-                            </div>
-                        </div>
-                        <button class="btn-primary" style="margin-top:15px;" id="btn-refresh-stats">Refresh Analisis Nilai</button>
-                    </div>
-
-                    <div id="sub-settings" class="tab-content">
-                        <h3 class="section-title">Pengaturan Sistem</h3>
-                        <div class="form-group">
-                            <label>Petugas Aktif</label>
-                            <input type="text" id="menu-pengguna" class="input-field" readonly style="background:#e2e8f0; color:#475569;">
-                        </div>
-                        <div class="form-group">
-                            <label>Status Server Database</label>
-                            <div style="font-size:13px; font-weight:bold; color:#16a34a; padding:10px; background:#f0fdf4; border-radius:10px; border:1px solid #bbf7d0;">
-                                ● Connected to Firebase Realtime Database
-                            </div>
-                        </div>
-                        <button class="btn-text" style="color:#ef4444; font-weight:bold; text-align:left; padding:0;" id="btn-reset-mapel">Reset Pilihan Mapel ke Default</button>
-                    </div>
-
                 </div>
+
+                <div id="sub-nilai-stats" class="tab-content">
+                    <h3 class="section-title">Analisis Rekap Nilai</h3>
+                    <div class="stats-card-grid">
+                        <div class="stat-box">
+                            <div class="stat-title">Tertinggi</div>
+                            <div class="stat-value" id="stat-max">-</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-title">Terendah</div>
+                            <div class="stat-value" id="stat-min">-</div>
+                        </div>
+                        <div class="stat-box" style="grid-column: span 2;">
+                            <div class="stat-title">Rata-Rata Sekolah</div>
+                            <div class="stat-value" id="stat-avg" style="color:#2563eb;">-</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" style="margin-top:15px;" id="btn-refresh-stats">Refresh Analisis</button>
+                </div>
+
+                <div id="sub-settings" class="tab-content">
+                    <h3 class="section-title">Pengaturan Sistem</h3>
+                    <div class="form-group">
+                        <label>Petugas Aktif</label>
+                        <input type="text" id="menu-pengguna" class="input-field" readonly style="background:#e2e8f0; color:#475569;">
+                    </div>
+                    <button class="btn-text" style="color:#ef4444; font-weight:bold; padding:0; text-align:left;" id="btn-reset-mapel">Reset Pilihan Mapel ke Default</button>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <script src="script.js?v=1.2"></script>
+    <script src="script.js?v=2.0"></script>
 </body>
 </html>
