@@ -71,3 +71,87 @@ button { cursor: pointer; font-family: inherit; }
     .tab-link { white-space: nowrap; width: auto; }
     .btn-logout-side { margin-top: 0; }
 }
+/* Kunci paksa container utama agar selalu berwujud Portrait HP tegak */
+.app-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 410px; /* Ukuran lebar layar HP */
+    height: 92vh;
+    max-height: 780px;
+    border-radius: 28px;
+    padding: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Navigasi atas horizontal scrollable khusus Portrait */
+.top-tab-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    scrollbar-width: none; /* Hilangkan scrollbar di Firefox */
+}
+.top-tab-bar::-webkit-scrollbar { display: none; } /* Hilangkan scrollbar di Chrome */
+
+.top-tab-bar .tab-link {
+    padding: 6px 14px;
+    background: #f1f5f9;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    color: #475569;
+}
+.top-tab-bar .tab-link.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.content-tabs-portrait {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+/* Tombol Biometrik Utama */
+.btn-biometric {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #2563eb;
+    background: transparent;
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 13px;
+    transition: 0.2s;
+}
+.btn-biometric:hover {
+    background: rgba(37, 99, 235, 0.05);
+}
+
+/* Badge Status Deteksi Hardware */
+.status-hardware-badge {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid transparent;
+}
+.status-hardware-badge.support {
+    background: #f0fdf4;
+    color: #16a34a;
+    border-color: #bbf7d0;
+}
+.status-hardware-badge.no-support {
+    background: #fef2f2;
+    color: #ef4444;
+    border-color: #fecaca;
+    }
+                     
